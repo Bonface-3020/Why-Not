@@ -234,6 +234,7 @@ function showFormSuccess(form, formType) {
     };
 
     successCard.innerHTML = `
+        <button type="button" class="form-success-close" aria-label="Close">✕</button>
         <div style="text-align: center; padding: var(--space-xl) var(--space-md); animation: fadeIn 0.3s ease;">
             <div style="width: 72px; height: 72px; margin: 0 auto var(--space-md); background: rgba(37, 211, 102, 0.15); border: 2px solid #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: #25D366; box-shadow: 0 0 30px rgba(37, 211, 102, 0.25);">
                 ✓
@@ -248,7 +249,9 @@ function showFormSuccess(form, formType) {
                 ${details.instruction}
             </p>
             <div style="display: flex; gap: var(--space-sm); justify-content: center; flex-wrap: wrap;">
-                ${modal ? `<button type="button" class="btn btn-primary close-success-modal" style="padding: 10px 28px;">Done</button>` : ''}
+                <button type="button" class="btn btn-primary form-done-btn" style="padding: 10px 32px;">
+                    Done
+                </button>
                 <button type="button" class="btn btn-secondary reset-form-btn" style="padding: 10px 24px; font-size: 0.85rem;">
                     ${details.resetLabel}
                 </button>
@@ -266,18 +269,30 @@ function showFormSuccess(form, formType) {
         if (modalSubtitle) modalSubtitle.style.display = '';
     };
 
-    const closeBtn = successCard.querySelector('.close-success-modal');
-    if (closeBtn && modal) {
-        closeBtn.addEventListener('click', () => {
-            const overlay = modal.closest('.modal-overlay');
-            if (overlay) {
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+    const handleClose = () => {
+        const overlay = form.closest('.modal-overlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
             setTimeout(restoreForm, 300);
-        });
+        } else {
+            restoreForm();
+        }
+    };
+
+    // Close button (X)
+    const closeX = successCard.querySelector('.form-success-close');
+    if (closeX) {
+        closeX.addEventListener('click', handleClose);
     }
 
+    // Done button
+    const doneBtn = successCard.querySelector('.form-done-btn');
+    if (doneBtn) {
+        doneBtn.addEventListener('click', handleClose);
+    }
+
+    // Reset button (Submit Another / Book Another Spot)
     const resetBtn = successCard.querySelector('.reset-form-btn');
     if (resetBtn) {
         resetBtn.addEventListener('click', restoreForm);
