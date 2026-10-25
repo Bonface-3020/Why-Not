@@ -135,6 +135,23 @@ function initModals() {
         });
     });
 
+    // Helper to clean up success cards inside a modal
+    function resetModalForm(overlay) {
+        const successCard = overlay.querySelector('.form-success-card');
+        if (successCard) {
+            successCard.remove();
+            const form = overlay.querySelector('form[data-form]');
+            const modalTitle = overlay.querySelector('.modal-title');
+            const modalSubtitle = overlay.querySelector('.modal-subtitle');
+            if (form) {
+                form.reset();
+                form.style.display = '';
+            }
+            if (modalTitle) modalTitle.style.display = '';
+            if (modalSubtitle) modalSubtitle.style.display = '';
+        }
+    }
+
     // Close modal triggers
     document.querySelectorAll('.modal-close, .modal-overlay').forEach(el => {
         el.addEventListener('click', (e) => {
@@ -142,6 +159,7 @@ function initModals() {
                 const overlay = el.closest('.modal-overlay') || el;
                 overlay.classList.remove('active');
                 document.body.style.overflow = '';
+                resetModalForm(overlay);
             }
         });
     });
@@ -152,19 +170,134 @@ function initModals() {
             document.querySelectorAll('.modal-overlay.active').forEach(m => {
                 m.classList.remove('active');
                 document.body.style.overflow = '';
+                resetModalForm(m);
             });
         }
     });
 }
 
-/* --- Form Handling — WhatsApp Redirect --- */
-const WA_NUMBER = '254780753015'; //
+/* --- Form Handling — WhatsApp Redirect & In-Place Confirmation --- */
+const WA_NUMBER = '254780753015';
+
+function openWhatsAppNewTab(waUrl) {
+    const link = document.createElement('a');
+    link.href = waUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function showFormSuccess(form, formType) {
+    form.style.display = 'none';
+
+    const modal = form.closest('.modal');
+    const modalTitle = modal ? modal.querySelector('.modal-title') : null;
+    const modalSubtitle = modal ? modal.querySelector('.modal-subtitle') : null;
+    if (modalTitle) modalTitle.style.display = 'none';
+    if (modalSubtitle) modalSubtitle.style.display = 'none';
+
+    // Remove any previously injected success card
+    const existingCard = form.parentElement.querySelector('.form-success-card');
+    if (existingCard) existingCard.remove();
+
+    const successCard = document.createElement('div');
+    successCard.className = 'form-success-card';
+
+    const contentMap = {
+        'rsvp': {
+            title: 'RSVP Request Sent!',
+            subtitle: 'WhatsApp opened in a new tab with your reservation details.',
+            instruction: 'Simply tap <strong>Send</strong> in WhatsApp to deliver your spot request. Our team will confirm your reservation right away!',
+            resetLabel: 'Book Another Spot'
+        },
+        'host': {
+            title: 'Event Booking Request Sent!',
+            subtitle: 'WhatsApp opened in a new tab with your event details.',
+            instruction: 'Tap <strong>Send</strong> in WhatsApp to deliver your event brief. Our event planner will review your date and package to lock in your booking!',
+            resetLabel: 'Submit Another Request'
+        },
+        'contact': {
+            title: 'Message Sent Successfully!',
+            subtitle: 'WhatsApp opened in a new tab with your message.',
+            instruction: 'Tap <strong>Send</strong> in WhatsApp to connect directly with us. We reply promptly during business hours!',
+            resetLabel: 'Send Another Message'
+        }
+    };
+
+    const details = contentMap[formType] || {
+        title: 'Request Sent Successfully!',
+        subtitle: 'WhatsApp opened in a new tab with your message.',
+        instruction: 'Tap <strong>Send</strong> in WhatsApp to deliver your message.',
+        resetLabel: 'Submit Another'
+    };
+
+    successCard.innerHTML = `
+        <div style="text-align: center; padding: var(--space-xl) var(--space-md); animation: fadeIn 0.3s ease;">
+            <div style="width: 72px; height: 72px; margin: 0 auto var(--space-md); background: rgba(37, 211, 102, 0.15); border: 2px solid #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: #25D366; box-shadow: 0 0 30px rgba(37, 211, 102, 0.25);">
+                ✓
+            </div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--clr-gold); margin-bottom: var(--space-xs);">
+                ${details.title}
+            </h3>
+            <p style="color: var(--clr-white); font-weight: 500; font-size: 1.05rem; margin-bottom: var(--space-sm);">
+                ${details.subtitle}
+            </p>
+            <p style="color: var(--clr-gray-300); font-size: 0.9rem; max-width: 440px; margin: 0 auto var(--space-lg); line-height: 1.6;">
+                ${details.instruction}
+            </p>
+            <div style="display: flex; gap: var(--space-sm); justify-content: center; flex-wrap: wrap;">
+                ${modal ? `<button type="button" class="btn btn-primary close-success-modal" style="padding: 10px 28px;">Done</button>` : ''}
+                <button type="button" class="btn btn-secondary reset-form-btn" style="padding: 10px 24px; font-size: 0.85rem;">
+                    ${details.resetLabel}
+                </button>
+            </div>
+        </div>
+    `;
+
+    form.parentElement.insertBefore(successCard, form);
+
+    const restoreForm = () => {
+        successCard.remove();
+        form.reset();
+        form.style.display = '';
+        if (modalTitle) modalTitle.style.display = '';
+        if (modalSubtitle) modalSubtitle.style.display = '';
+    };
+
+    const closeBtn = successCard.querySelector('.close-success-modal');
+    if (closeBtn && modal) {
+        closeBtn.addEventListener('click', () => {
+            const overlay = modal.closest('.modal-overlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            setTimeout(restoreForm, 300);
+        });
+    }
+
+    const resetBtn = successCard.querySelector('.reset-form-btn');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', restoreForm);
+    }
+}
+
 function initForms() {
     document.querySelectorAll('form[data-form]').forEach(form => {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
             const formType = form.dataset.form;
+
+            // Simple newsletter handling
+            if (formType === 'newsletter') {
+                showToast('✅', getFormSuccessMessage('newsletter'));
+                form.reset();
+                return;
+            }
+
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalHTML = submitBtn ? submitBtn.innerHTML : '';
 
@@ -176,25 +309,16 @@ function initForms() {
             const message = buildWhatsAppMessage(formType, form);
             const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
 
-            // Open WhatsApp immediately within user event to prevent popup blockers
-            const win = window.open(waUrl, '_blank', 'noopener,noreferrer');
-            if (!win || win.closed || typeof win.closed === 'undefined') {
-                window.location.href = waUrl;
-            }
+            // Open WhatsApp in a NEW TAB — never moves or leaves the current website
+            openWhatsAppNewTab(waUrl);
 
+            // Display in-place success confirmation on the webpage
             showToast('✅', getFormSuccessMessage(formType));
-            form.reset();
+            showFormSuccess(form, formType);
 
             if (submitBtn) {
                 submitBtn.innerHTML = originalHTML;
                 submitBtn.disabled = false;
-            }
-
-            // Close modal if inside one
-            const modal = form.closest('.modal-overlay');
-            if (modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
             }
         });
     });
