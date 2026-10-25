@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    WHY NOT? — Main JavaScript
    ============================================ */
 
@@ -158,7 +158,7 @@ function initModals() {
 }
 
 /* --- Form Handling — WhatsApp Redirect --- */
-const WA_NUMBER = '254700000000'; // TODO: Replace with real WhatsApp business number
+const WA_NUMBER = '254780753015'; // TODO: Replace with real WhatsApp business number
 
 function initForms() {
     document.querySelectorAll('form[data-form]').forEach(form => {
