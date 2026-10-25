@@ -1,4 +1,4 @@
-﻿/* ============================================
+/* ============================================
    WHY NOT? — Main JavaScript
    ============================================ */
 
@@ -166,29 +166,36 @@ function initForms() {
 
             const formType = form.dataset.form;
             const submitBtn = form.querySelector('button[type="submit"]');
-            const originalHTML = submitBtn.innerHTML;
+            const originalHTML = submitBtn ? submitBtn.innerHTML : '';
 
-            // Loading state
-            submitBtn.innerHTML = '<span class="btn-icon">⏳</span> Opening WhatsApp...';
-            submitBtn.disabled = true;
+            if (submitBtn) {
+                submitBtn.innerHTML = '<span class="btn-icon">⏳</span> Opening WhatsApp...';
+                submitBtn.disabled = true;
+            }
 
             const message = buildWhatsAppMessage(formType, form);
             const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
 
-            setTimeout(() => {
-                window.open(waUrl, '_blank', 'noopener,noreferrer');
-                showToast('✅', getFormSuccessMessage(formType));
-                form.reset();
+            // Open WhatsApp immediately within user event to prevent popup blockers
+            const win = window.open(waUrl, '_blank', 'noopener,noreferrer');
+            if (!win || win.closed || typeof win.closed === 'undefined') {
+                window.location.href = waUrl;
+            }
+
+            showToast('✅', getFormSuccessMessage(formType));
+            form.reset();
+
+            if (submitBtn) {
                 submitBtn.innerHTML = originalHTML;
                 submitBtn.disabled = false;
+            }
 
-                // Close modal if inside one
-                const modal = form.closest('.modal-overlay');
-                if (modal) {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
-            }, 600);
+            // Close modal if inside one
+            const modal = form.closest('.modal-overlay');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     });
 }
