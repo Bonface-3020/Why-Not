@@ -177,7 +177,7 @@ function initModals() {
 }
 
 /* --- Form Handling — WhatsApp Redirect & In-Place Confirmation --- */
-const WA_NUMBER = '254780753015';
+const WA_NUMBER = '254798316618';
 
 function openWhatsAppNewTab(waUrl) {
     const link = document.createElement('a');
