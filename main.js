@@ -200,25 +200,36 @@ function initForms() {
     });
 }
 
+function getFormFieldValue(form, name) {
+    const el = form.elements[name];
+    if (!el) return '';
+    if (el.tagName === 'SELECT') {
+        const option = el.options[el.selectedIndex];
+        return (option && option.value) ? option.text.trim() : '';
+    }
+    return (el.value || '').trim();
+}
+
 function buildWhatsAppMessage(formType, form) {
-    const get = (name) => (form.elements[name] ? form.elements[name].value.trim() : '');
+    const get = (name) => getFormFieldValue(form, name);
 
     if (formType === 'rsvp') {
-        const event = get('event') || 'Not specified';
+        const event = get('event') || 'Upcoming Game Hangout';
         const name = get('name');
         const phone = get('phone');
-        const guests = get('guests') || '1';
+        const guests = get('guests') || '1 Person';
         const notes = get('notes');
         return [
-            `👑 *Why Not? Game Hangout — RSVP Request*`,
+            `*WHY NOT? GAME HANGOUT*`,
+            `*RSVP Booking Request*`,
             ``,
-            `🎟️ Event: ${event}`,
-            `👤 Name: ${name}`,
-            `📞 Phone: ${phone}`,
-            `👥 Guests: ${guests}`,
-            notes ? `📝 Notes: ${notes}` : null,
+            `• *Event:* ${event}`,
+            `• *Name:* ${name}`,
+            `• *Phone:* ${phone}`,
+            `• *Guests:* ${guests}`,
+            notes ? `• *Notes:* ${notes}` : null,
             ``,
-            `Please confirm my spot — excited to join! 🎯`
+            `Please confirm my spot — excited to join!`
         ].filter(Boolean).join('\n');
     }
 
@@ -229,14 +240,15 @@ function buildWhatsAppMessage(formType, form) {
         const subject = get('subject') || 'General Inquiry';
         const message = get('message');
         return [
-            `👑 *Why Not? Game Hangout — Contact Message*`,
+            `*WHY NOT? GAME HANGOUT*`,
+            `*New Inquiry*`,
             ``,
-            `👤 Name: ${name}`,
-            phone ? `📞 Phone: ${phone}` : null,
-            `✉️ Email: ${email}`,
-            `📌 Subject: ${subject}`,
+            `• *Name:* ${name}`,
+            phone ? `• *Phone:* ${phone}` : null,
+            email ? `• *Email:* ${email}` : null,
+            `• *Subject:* ${subject}`,
             ``,
-            `💬 Message:`,
+            `*Message:*`,
             message
         ].filter(Boolean).join('\n');
     }
@@ -245,35 +257,36 @@ function buildWhatsAppMessage(formType, form) {
         const name = get('name');
         const phone = get('phone');
         const email = get('email');
-        const type = get('type') || 'Not specified';
+        const type = get('type') || 'Private Event';
         const pkg = get('package') || 'To discuss';
         const date = get('date') || 'Flexible';
-        const guests = get('guests') || 'Not specified';
+        const guests = get('guests') || 'To confirm';
         const venue = get('venue') || 'No preference';
         const notes = get('notes');
         return [
-            `👑 *Why Not? Game Hangout — Private Event Request*`,
+            `*WHY NOT? GAME HANGOUT*`,
+            `*Private Event Request*`,
             ``,
-            `👤 Name: ${name}`,
-            `📞 Phone: ${phone}`,
-            `✉️ Email: ${email}`,
-            `🎉 Event Type: ${type}`,
-            `📦 Package: ${pkg}`,
-            `📅 Preferred Date: ${date}`,
-            `👥 Expected Guests: ${guests}`,
-            `📍 Venue Preference: ${venue}`,
-            notes ? `📝 Notes: ${notes}` : null,
+            `• *Name:* ${name}`,
+            `• *Phone:* ${phone}`,
+            email ? `• *Email:* ${email}` : null,
+            `• *Event Type:* ${type}`,
+            `• *Package:* ${pkg}`,
+            `• *Preferred Date:* ${date}`,
+            `• *Expected Guests:* ${guests}`,
+            `• *Venue Preference:* ${venue}`,
+            notes ? `• *Notes:* ${notes}` : null,
             ``,
-            `Please get in touch to plan our event! 🎯`
+            `Please get in touch to help plan our event!`
         ].filter(Boolean).join('\n');
     }
 
     // Generic fallback
     const fields = Array.from(form.elements)
         .filter(el => el.name && el.value && el.type !== 'submit')
-        .map(el => `• ${el.name}: ${el.value}`)
+        .map(el => `• *${el.name}:* ${el.value}`)
         .join('\n');
-    return `👑 *Why Not? Game Hangout — Inquiry*\n\n${fields}`;
+    return `*WHY NOT? GAME HANGOUT — INQUIRY*\n\n${fields}`;
 }
 
 function getFormSuccessMessage(formType) {
