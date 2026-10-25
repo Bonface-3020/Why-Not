@@ -157,53 +157,127 @@ function initModals() {
     });
 }
 
-/* --- Form Handling --- */
+/* --- Form Handling — WhatsApp Redirect --- */
+const WA_NUMBER = '254700000000'; // TODO: Replace with real WhatsApp business number
+
 function initForms() {
     document.querySelectorAll('form[data-form]').forEach(form => {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            
-            // Simulate submission
+
+            const formType = form.dataset.form;
             const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
+            const originalHTML = submitBtn.innerHTML;
+
+            // Loading state
+            submitBtn.innerHTML = '<span class="btn-icon">⏳</span> Opening WhatsApp...';
             submitBtn.disabled = true;
 
+            const message = buildWhatsAppMessage(formType, form);
+            const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+
             setTimeout(() => {
-                submitBtn.textContent = '✓ Sent!';
-                submitBtn.style.background = 'linear-gradient(135deg, #4caf50, #66bb6a)';
-                
-                showToast('✓', getFormSuccessMessage(form.dataset.form));
+                window.open(waUrl, '_blank', 'noopener,noreferrer');
+                showToast('✅', getFormSuccessMessage(formType));
+                form.reset();
+                submitBtn.innerHTML = originalHTML;
+                submitBtn.disabled = false;
 
-                setTimeout(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                    submitBtn.style.background = '';
-                    form.reset();
-
-                    // Close modal if inside one
-                    const modal = form.closest('.modal-overlay');
-                    if (modal) {
-                        modal.classList.remove('active');
-                        document.body.style.overflow = '';
-                    }
-                }, 2000);
-            }, 1500);
+                // Close modal if inside one
+                const modal = form.closest('.modal-overlay');
+                if (modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }, 600);
         });
     });
 }
 
+function buildWhatsAppMessage(formType, form) {
+    const get = (name) => (form.elements[name] ? form.elements[name].value.trim() : '');
+
+    if (formType === 'rsvp') {
+        const event = get('event') || 'Not specified';
+        const name = get('name');
+        const phone = get('phone');
+        const guests = get('guests') || '1';
+        const notes = get('notes');
+        return [
+            `👑 *Why Not? Game Hangout — RSVP Request*`,
+            ``,
+            `🎟️ Event: ${event}`,
+            `👤 Name: ${name}`,
+            `📞 Phone: ${phone}`,
+            `👥 Guests: ${guests}`,
+            notes ? `📝 Notes: ${notes}` : null,
+            ``,
+            `Please confirm my spot — excited to join! 🎯`
+        ].filter(Boolean).join('\n');
+    }
+
+    if (formType === 'contact') {
+        const name = get('name');
+        const phone = get('phone');
+        const email = get('email');
+        const subject = get('subject') || 'General Inquiry';
+        const message = get('message');
+        return [
+            `👑 *Why Not? Game Hangout — Contact Message*`,
+            ``,
+            `👤 Name: ${name}`,
+            phone ? `📞 Phone: ${phone}` : null,
+            `✉️ Email: ${email}`,
+            `📌 Subject: ${subject}`,
+            ``,
+            `💬 Message:`,
+            message
+        ].filter(Boolean).join('\n');
+    }
+
+    if (formType === 'host') {
+        const name = get('name');
+        const phone = get('phone');
+        const email = get('email');
+        const type = get('type') || 'Not specified';
+        const pkg = get('package') || 'To discuss';
+        const date = get('date') || 'Flexible';
+        const guests = get('guests') || 'Not specified';
+        const venue = get('venue') || 'No preference';
+        const notes = get('notes');
+        return [
+            `👑 *Why Not? Game Hangout — Private Event Request*`,
+            ``,
+            `👤 Name: ${name}`,
+            `📞 Phone: ${phone}`,
+            `✉️ Email: ${email}`,
+            `🎉 Event Type: ${type}`,
+            `📦 Package: ${pkg}`,
+            `📅 Preferred Date: ${date}`,
+            `👥 Expected Guests: ${guests}`,
+            `📍 Venue Preference: ${venue}`,
+            notes ? `📝 Notes: ${notes}` : null,
+            ``,
+            `Please get in touch to plan our event! 🎯`
+        ].filter(Boolean).join('\n');
+    }
+
+    // Generic fallback
+    const fields = Array.from(form.elements)
+        .filter(el => el.name && el.value && el.type !== 'submit')
+        .map(el => `• ${el.name}: ${el.value}`)
+        .join('\n');
+    return `👑 *Why Not? Game Hangout — Inquiry*\n\n${fields}`;
+}
+
 function getFormSuccessMessage(formType) {
     const messages = {
-        'rsvp': 'RSVP confirmed! We\'ll send you the details soon.',
-        'contact': 'Message sent! We\'ll get back to you within 24 hours.',
-        'host': 'Request submitted! Our team will reach out to plan your event.',
+        'rsvp': 'WhatsApp is opening to confirm your RSVP! We\'ll see you at the event 🎯',
+        'contact': 'WhatsApp is opening with your message! We reply within 24 hours.',
+        'host': 'WhatsApp is opening with your event request! Our team will plan it out with you.',
         'newsletter': 'You\'re subscribed! Welcome to the Why Not? family.'
     };
-    return messages[formType] || 'Submitted successfully!';
+    return messages[formType] || 'Opening WhatsApp — we\'ll be in touch!';
 }
 
 /* --- Toast Notifications --- */

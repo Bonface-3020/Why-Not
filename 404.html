@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found | Why Not? Game Hangout</title>
+    <meta name="description" content="The page you're looking for has wandered off the board. Head back to Why Not? Game Hangout.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
+    <style>
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--space-2xl) var(--space-lg);
+            background: var(--clr-black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-page::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% -10%, rgba(200, 164, 78, 0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 80% 80%, rgba(26, 46, 26, 0.3) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .error-code {
+            font-family: var(--font-heading);
+            font-size: clamp(6rem, 20vw, 12rem);
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--clr-gold) 0%, var(--clr-gold-light) 50%, var(--clr-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-lg);
+            position: relative;
+            z-index: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .error-emoji {
+            font-size: clamp(3rem, 10vw, 5rem);
+            display: block;
+            margin-bottom: var(--space-xl);
+            animation: wobble 2s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.1); }
+        }
+
+        .error-title {
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--clr-cream);
+            margin-bottom: var(--space-lg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .error-title span {
+            color: var(--clr-gold);
+        }
+
+        .error-desc {
+            color: var(--clr-text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            max-width: 480px;
+            margin: 0 auto var(--space-3xl);
+            position: relative;
+            z-index: 1;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: var(--space-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .error-suggestions {
+            margin-top: var(--space-3xl);
+            padding-top: var(--space-2xl);
+            border-top: 1px solid var(--clr-border);
+            position: relative;
+            z-index: 1;
+        }
+
+        .error-suggestions p {
+            color: var(--clr-text-muted);
+            font-size: 0.9rem;
+            margin-bottom: var(--space-lg);
+        }
+
+        .error-links {
+            display: flex;
+            gap: var(--space-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-link {
+            color: var(--clr-gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: var(--space-sm) var(--space-lg);
+            border: 1px solid var(--clr-border-gold);
+            border-radius: var(--radius-full);
+            transition: all var(--transition-base);
+        }
+
+        .error-link:hover {
+            background: rgba(200, 164, 78, 0.1);
+            border-color: var(--clr-gold);
+        }
+
+        .floating-dice {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.05;
+            pointer-events: none;
+            animation: float-dice 6s ease-in-out infinite;
+        }
+
+        .floating-dice:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; font-size: 3rem; }
+        .floating-dice:nth-child(2) { top: 20%; right: 8%; animation-delay: 1s; font-size: 2.5rem; }
+        .floating-dice:nth-child(3) { bottom: 25%; left: 10%; animation-delay: 2s; }
+        .floating-dice:nth-child(4) { bottom: 15%; right: 5%; animation-delay: 3s; font-size: 2.5rem; }
+        .floating-dice:nth-child(5) { top: 50%; left: 2%; animation-delay: 1.5s; font-size: 1.5rem; }
+
+        @keyframes float-dice {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(15deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating decorative elements -->
+    <span class="floating-dice">🎲</span>
+    <span class="floating-dice">🎯</span>
+    <span class="floating-dice">🏹</span>
+    <span class="floating-dice">♟️</span>
+    <span class="floating-dice">🧩</span>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="/" class="nav-logo">
+                <span class="crown">👑</span>
+                <div class="logo-text">
+                    <span class="logo-main">Why Not?</span>
+                    <span class="logo-sub">Game Hangout</span>
+                </div>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="/">Home</a>
+                <a href="/hangout">Game Hangout</a>
+                <a href="/host">Host a Night</a>
+                <a href="/contact">Contact</a>
+                <a href="/hangout" class="nav-cta">Book Now</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== 404 CONTENT ===== -->
+    <main class="error-page">
+        <span class="error-emoji">🎲</span>
+        <div class="error-code">404</div>
+        <h1 class="error-title">Game <span>Over</span> — Wrong Board!</h1>
+        <p class="error-desc">
+            Looks like this page rolled a zero and wandered off the board. 
+            Don't worry — the real fun is still on. Let's get you back in the game!
+        </p>
+        <div class="error-actions">
+            <a href="/" class="btn btn-primary">
+                <span class="btn-icon">🏠</span>
+                Back to Home
+            </a>
+            <a href="/hangout" class="btn btn-secondary">
+                🎯 View Events
+            </a>
+        </div>
+
+        <div class="error-suggestions">
+            <p>Or jump directly to:</p>
+            <div class="error-links">
+                <a href="/hangout" class="error-link">Game Hangout</a>
+                <a href="/host" class="error-link">Host a Night</a>
+                <a href="/contact" class="error-link">Contact Us</a>
+                <a href="/privacy" class="error-link">Privacy Policy</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/254700000000?text=Hi%20Why%20Not%3F%20%F0%9F%91%8B%20I%27d%20like%20to%20find%20out%20more%20about%20your%20Game%20Hangout%20events!" 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Chat with us on WhatsApp">
+        <span class="whatsapp-float-label">Book on WhatsApp</span>
+        <div class="whatsapp-float-btn">💬</div>
+    </a>
+    <script src="main.js"></script>
+</body>
+</html>
