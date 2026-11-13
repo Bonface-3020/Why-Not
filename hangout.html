@@ -76,7 +76,7 @@
             <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-md); margin-bottom: var(--space-2xl);">
                 <div>
                     <h2 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700;">Upcoming Events</h2>
-                    <p style="color: var(--clr-text-muted); font-size: 0.9rem;">Find the next game night and secure your spot</p>
+                    <p style="color: var(--clr-text-muted); font-size: 0.9rem;">Secure your spot for the next event</p>
                 </div>
                 <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
                     <button class="btn btn-dark filter-btn active" data-filter="all" onclick="filterEvents('all', this)">All Events</button>
@@ -92,174 +92,48 @@
         <div class="container">
             <div class="events-grid" id="eventsGrid">
 
-                <!-- Event 1 -->
+                <!-- Beach BBQ & Bonfire — 21 Nov 2026 -->
                 <div class="event-card reveal" data-status="open">
                     <div class="event-card-image">
-                        <img src="images/hero-banner.jpg" alt="Game Hangout November Edition">
+                        <img src="images/hero-banner.jpg" alt="Beach BBQ & Bonfire at Mkomani Beach">
                         <div class="event-date-badge">
-                            <span class="day">15</span>
+                            <span class="day">21</span>
                             <span class="month">Nov 2026</span>
                         </div>
                         <span class="event-status open">Open</span>
                     </div>
                     <div class="event-card-body">
-                        <h3 class="event-card-title">Game Hangout — November Edition</h3>
+                        <h3 class="event-card-title">Beach BBQ &amp; Bonfire 🔥</h3>
                         <div class="event-card-details">
                             <div class="event-detail">
                                 <span class="icon">📍</span>
-                                Akbar & Grill, Nyali
+                                Mkomani Beach, next to English Point
                             </div>
                             <div class="event-detail">
                                 <span class="icon">🕒</span>
-                                3:00 PM
+                                From 4:00 PM — Saturday
                             </div>
                             <div class="event-detail">
-                                <span class="icon">👥</span>
-                                40 spots
+                                <span class="icon">🍽️</span>
+                                Fish · Ugali · Kachumbari
                             </div>
                         </div>
                         <div class="event-card-games">
-                            <span class="game-tag">🏹 Archery</span>
-                            <span class="game-tag">🎯 Darts</span>
-                            <span class="game-tag">🧱 Jenga</span>
-                            <span class="game-tag">⛳ Mini Golf</span>
-                            <span class="game-tag">+8 more</span>
+                            <span class="game-tag">🔥 Bonfire</span>
+                            <span class="game-tag">🍖 BBQ</span>
+                            <span class="game-tag">🎮 Games</span>
+                            <span class="game-tag">🌅 Sunset</span>
+                            <span class="game-tag">🍾 BYOB</span>
+                        </div>
+                        <div style="margin: var(--space-sm) 0; padding: var(--space-sm) var(--space-md); background: rgba(212,175,55,0.08); border-radius: 8px; border-left: 3px solid var(--clr-gold); font-size: 0.82rem; color: var(--clr-text-muted);">
+                            💳 <strong style="color: var(--clr-gold);">Pay via Pochi la Biashara:</strong> 0798 316 618 &nbsp;|&nbsp; 📞 Inquiries: 0743 094 717
                         </div>
                         <div class="event-card-footer">
                             <div class="card-price">
-                                KSh 1,800 <small>/ person</small>
+                                KSh 850 <small>/ person</small>
                             </div>
                             <button class="btn btn-primary" data-modal="rsvpModal" style="padding: 10px 22px; font-size: 0.8rem;">
-                                RSVP Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Event 2 -->
-                <div class="event-card reveal" data-status="filling">
-                    <div class="event-card-image">
-                        <img src="images/games-section.jpg" alt="Game Hangout Special: Team Battle" loading="lazy" decoding="async">
-                        <div class="event-date-badge">
-                            <span class="day">29</span>
-                            <span class="month">Nov 2026</span>
-                        </div>
-                        <span class="event-status filling">Filling Fast</span>
-                    </div>
-                    <div class="event-card-body">
-                        <h3 class="event-card-title">Special: Team Battle Royale</h3>
-                        <div class="event-card-details">
-                            <div class="event-detail">
-                                <span class="icon">📍</span>
-                                Akbar & Grill, Nyali
-                            </div>
-                            <div class="event-detail">
-                                <span class="icon">🕒</span>
-                                2:00 PM
-                            </div>
-                            <div class="event-detail">
-                                <span class="icon">👥</span>
-                                12 spots left
-                            </div>
-                        </div>
-                        <div class="event-card-games">
-                            <span class="game-tag">🤝 Team Games</span>
-                            <span class="game-tag">🏹 Archery</span>
-                            <span class="game-tag">🌽 Cornhole</span>
-                            <span class="game-tag">+9 more</span>
-                        </div>
-                        <div class="event-card-footer">
-                            <div class="card-price">
-                                KSh 2,200 <small>/ person</small>
-                            </div>
-                            <button class="btn btn-primary" data-modal="rsvpModal" style="padding: 10px 22px; font-size: 0.8rem;">
-                                RSVP Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Event 3 -->
-                <div class="event-card reveal" data-status="open">
-                    <div class="event-card-image">
-                        <img src="images/host-event.jpg" alt="Game Hangout December Edition" loading="lazy" decoding="async">
-                        <div class="event-date-badge">
-                            <span class="day">13</span>
-                            <span class="month">Dec 2026</span>
-                        </div>
-                        <span class="event-status open">Open</span>
-                    </div>
-                    <div class="event-card-body">
-                        <h3 class="event-card-title">Game Hangout — December Holiday Edition</h3>
-                        <div class="event-card-details">
-                            <div class="event-detail">
-                                <span class="icon">📍</span>
-                                Akbar & Grill, Nyali
-                            </div>
-                            <div class="event-detail">
-                                <span class="icon">🕒</span>
-                                3:00 PM
-                            </div>
-                            <div class="event-detail">
-                                <span class="icon">👥</span>
-                                50 spots
-                            </div>
-                        </div>
-                        <div class="event-card-games">
-                            <span class="game-tag">🎄 Holiday Specials</span>
-                            <span class="game-tag">🏹 Archery</span>
-                            <span class="game-tag">🎯 Darts</span>
-                            <span class="game-tag">+10 more</span>
-                        </div>
-                        <div class="event-card-footer">
-                            <div class="card-price">
-                                KSh 1,800 <small>/ person</small>
-                            </div>
-                            <button class="btn btn-primary" data-modal="rsvpModal" style="padding: 10px 22px; font-size: 0.8rem;">
-                                RSVP Now
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Event 4 -->
-                <div class="event-card reveal" data-status="open">
-                    <div class="event-card-image">
-                        <img src="images/about-section.jpg" alt="New Year's Game Night" loading="lazy" decoding="async">
-                        <div class="event-date-badge">
-                            <span class="day">03</span>
-                            <span class="month">Jan 2027</span>
-                        </div>
-                        <span class="event-status open">Open</span>
-                    </div>
-                    <div class="event-card-body">
-                        <h3 class="event-card-title">New Year's Game Night Kickoff</h3>
-                        <div class="event-card-details">
-                            <div class="event-detail">
-                                <span class="icon">📍</span>
-                                Akbar & Grill, Nyali
-                            </div>
-                            <div class="event-detail">
-                                <span class="icon">🕒</span>
-                                3:00 PM
-                            </div>
-                            <div class="event-detail">
-                                <span class="icon">👥</span>
-                                50 spots
-                            </div>
-                        </div>
-                        <div class="event-card-games">
-                            <span class="game-tag">🎉 New Year Special</span>
-                            <span class="game-tag">🏹 Archery</span>
-                            <span class="game-tag">♟️ Board Games</span>
-                            <span class="game-tag">+8 more</span>
-                        </div>
-                        <div class="event-card-footer">
-                            <div class="card-price">
-                                KSh 2,000 <small>/ person</small>
-                            </div>
-                            <button class="btn btn-primary" data-modal="rsvpModal" style="padding: 10px 22px; font-size: 0.8rem;">
-                                RSVP Now
+                                Book Now
                             </button>
                         </div>
                     </div>
@@ -393,10 +267,7 @@
                         <label class="form-label" for="rsvp-event">Select Event *</label>
                         <select id="rsvp-event" name="event" class="form-select" required>
                             <option value="">Choose event</option>
-                            <option value="nov-15">Nov 15 — Game Hangout</option>
-                            <option value="nov-29">Nov 29 — Team Battle Royale</option>
-                            <option value="dec-13">Dec 13 — Holiday Edition</option>
-                            <option value="jan-03">Jan 03 — New Year Kickoff</option>
+                            <option value="nov-21-bbq">Nov 21 — Beach BBQ &amp; Bonfire</option>
                         </select>
                     </div>
                 </div>
