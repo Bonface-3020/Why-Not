@@ -31,6 +31,185 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#x1F451;</text></svg>">
 
+    <!-- ===== BEACH BBQ EVENT PROMO STYLES (remove after 21 Nov 2026) ===== -->
+    <style>
+        /* --- Announcement Bar --- */
+        .announce-bar {
+            position: relative;
+            background: linear-gradient(90deg, #1a1a1a 0%, #2a1f00 40%, #1a1a1a 100%);
+            border-bottom: 2px solid var(--clr-gold, #D4AF37);
+            padding: 10px 48px 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1100;
+        }
+        .announce-bar-inner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 0.88rem;
+            color: #f0e6c8;
+        }
+        .announce-fire { font-size: 1.1rem; animation: flicker 1.4s infinite alternate; }
+        @keyframes flicker {
+            0%   { opacity: 1;   transform: scale(1); }
+            100% { opacity: 0.75; transform: scale(1.15) rotate(5deg); }
+        }
+        .announce-text { letter-spacing: 0.01em; }
+        .announce-text strong { color: #D4AF37; }
+        .announce-cta {
+            background: #D4AF37;
+            color: #111;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 4px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+        .announce-cta:hover { background: #f0cc55; }
+        .announce-close {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px;
+        }
+        .announce-close:hover { color: #fff; }
+
+        /* --- Featured Event Card --- */
+        .featured-event-card {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #111 0%, #1c1600 55%, #0d0d0d 100%);
+            border: 1px solid rgba(212,175,55,0.35);
+            border-radius: 20px;
+            padding: 40px 44px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            box-shadow: 0 0 60px rgba(212,175,55,0.08), 0 8px 40px rgba(0,0,0,0.5);
+        }
+        .featured-event-glow {
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .featured-event-left { flex: 1; min-width: 0; }
+        .featured-event-label {
+            display: inline-block;
+            background: rgba(212,175,55,0.15);
+            border: 1px solid rgba(212,175,55,0.4);
+            color: #D4AF37;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+        }
+        .featured-event-title {
+            font-family: var(--font-heading, Georgia, serif);
+            font-size: clamp(1.6rem, 4vw, 2.6rem);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+        .featured-event-sub {
+            color: rgba(212,175,55,0.75);
+            font-size: 0.88rem;
+            letter-spacing: 0.06em;
+            margin-bottom: 20px;
+        }
+        .featured-event-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .featured-event-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        .featured-event-detail strong { color: #fff; }
+        .featured-event-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 22px;
+        }
+        .featured-event-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .featured-event-pay {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .featured-event-pay strong { color: #bbb; }
+
+        /* --- Price Box (right column) --- */
+        .featured-event-right { flex-shrink: 0; }
+        .featured-event-price-box {
+            background: rgba(212,175,55,0.08);
+            border: 2px solid rgba(212,175,55,0.5);
+            border-radius: 16px;
+            padding: 28px 32px;
+            text-align: center;
+            min-width: 160px;
+        }
+        .featured-event-price {
+            font-family: var(--font-heading, Georgia, serif);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #D4AF37;
+            line-height: 1;
+        }
+        .featured-event-price-label {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 4px;
+            margin-bottom: 18px;
+        }
+        .featured-event-countdown {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #fff;
+            background: rgba(255,255,255,0.07);
+            border-radius: 8px;
+            padding: 8px 10px;
+            line-height: 1.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .featured-event-card { flex-direction: column; padding: 28px 20px; gap: 24px; }
+            .featured-event-right { width: 100%; }
+            .featured-event-price-box { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; min-width: unset; }
+            .featured-event-price-label { margin-bottom: 0; }
+            .announce-bar { padding-right: 44px; }
+        }
+    </style>
+
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
@@ -63,6 +242,18 @@
     </script>
 </head>
 <body>
+
+    <!-- ===== ANNOUNCEMENT BAR — Beach BBQ & Bonfire (remove after 21 Nov 2026) ===== -->
+    <div class="announce-bar" id="announceBar">
+        <div class="announce-bar-inner">
+            <span class="announce-fire">🔥</span>
+            <span class="announce-text">
+                <strong>Beach BBQ &amp; Bonfire</strong> — Sat 21 Nov · Mkomani Beach · From 4 PM · KSh 850
+            </span>
+            <a href="hangout.html" class="announce-cta">Book Now →</a>
+        </div>
+        <button class="announce-close" onclick="closeAnnouncebar()" aria-label="Dismiss">✕</button>
+    </div>
 
     <!-- ===== NAVIGATION ===== -->
     <nav class="navbar" id="navbar">
@@ -168,9 +359,62 @@
         </div>
     </section>
 
-    <!-- ===== ABOUT ===== -->
-    <section class="section" id="about">
+    <!-- ===== FEATURED EVENT — Beach BBQ & Bonfire (remove after 21 Nov 2026) ===== -->
+    <section class="section" style="padding-top: 0; padding-bottom: var(--space-2xl);">
         <div class="container">
+            <div class="featured-event-card reveal">
+                <div class="featured-event-glow"></div>
+                <div class="featured-event-left">
+                    <span class="featured-event-label">🔥 Next Event</span>
+                    <h2 class="featured-event-title">Beach BBQ &amp; Bonfire</h2>
+                    <p class="featured-event-sub">Good Food &nbsp;·&nbsp; Games &nbsp;·&nbsp; Sunset &nbsp;·&nbsp; Good Company</p>
+                    <div class="featured-event-details">
+                        <div class="featured-event-detail">
+                            <span>📅</span>
+                            <span><strong>Saturday, 21 November 2026</strong></span>
+                        </div>
+                        <div class="featured-event-detail">
+                            <span>🕓</span>
+                            <span>From 4:00 PM</span>
+                        </div>
+                        <div class="featured-event-detail">
+                            <span>📍</span>
+                            <span>Mkomani Beach, next to English Point</span>
+                        </div>
+                        <div class="featured-event-detail">
+                            <span>🍽️</span>
+                            <span>Fish · Ugali · Kachumbari &nbsp;|&nbsp; 🍾 Bring Your Own Bottle</span>
+                        </div>
+                    </div>
+                    <div class="featured-event-tags">
+                        <span class="game-tag">🔥 Bonfire</span>
+                        <span class="game-tag">🍖 BBQ</span>
+                        <span class="game-tag">🎮 Games</span>
+                        <span class="game-tag">🌅 Sunset</span>
+                    </div>
+                    <div class="featured-event-actions">
+                        <a href="hangout.html" class="btn btn-primary">
+                            <span class="btn-icon">🎟️</span> Book Now — KSh 850
+                        </a>
+                        <a href="https://wa.me/254743094717?text=Hi%20Why%20Not%3F%20I%27d%20like%20to%20book%20for%20the%20Beach%20BBQ%20%26%20Bonfire%20on%2021%20Nov!" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                            💬 WhatsApp Us
+                        </a>
+                    </div>
+                    <p class="featured-event-pay">💳 Pay via Pochi la Biashara: <strong>0798 316 618</strong> &nbsp;|&nbsp; Inquiries: <strong>0743 094 717</strong></p>
+                </div>
+                <div class="featured-event-right">
+                    <div class="featured-event-price-box">
+                        <div class="featured-event-price">KSh 850</div>
+                        <div class="featured-event-price-label">per person</div>
+                        <div class="featured-event-countdown" id="bbqCountdown">Loading...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="section" id="about">        <div class="container">
             <div class="about-grid">
                 <div class="about-image reveal">
                     <img src="images/about-section.jpg" alt="Board games and snacks setup for a game night" loading="lazy" decoding="async">
@@ -579,5 +823,37 @@
     <button class="back-to-top" aria-label="Back to top">↑</button>
 
     <script src="main.js?v=5"></script>
+    <!-- ===== BEACH BBQ EVENT PROMO SCRIPTS (remove after 21 Nov 2026) ===== -->
+    <script>
+        // Announcement bar dismiss (remembered via sessionStorage so it stays gone per visit)
+        function closeAnnouncebar() {
+            const bar = document.getElementById('announceBar');
+            if (bar) { bar.style.display = 'none'; }
+            sessionStorage.setItem('announceBarDismissed', '1');
+        }
+        (function() {
+            if (sessionStorage.getItem('announceBarDismissed') === '1') {
+                const bar = document.getElementById('announceBar');
+                if (bar) bar.style.display = 'none';
+            }
+        })();
+
+        // Countdown to Sat 21 Nov 2026 4:00 PM EAT (UTC+3)
+        function updateCountdown() {
+            const target = new Date('2026-11-21T16:00:00+03:00').getTime();
+            const now = Date.now();
+            const diff = target - now;
+            const el = document.getElementById('bbqCountdown');
+            if (!el) return;
+            if (diff <= 0) { el.textContent = "Event is LIVE! 🔥"; return; }
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            el.innerHTML = `⏳ ${d}d ${h}h ${m}m ${s}s<br><span style="font-weight:400;color:#888;font-size:0.72rem;">until doors open</span>`;
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
 </body>
 </html>
